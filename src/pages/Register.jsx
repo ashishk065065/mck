@@ -38,20 +38,20 @@ export default function Register() {
       <div className="wrapper">
         <h2>Register</h2>
         <form onSubmit={handleRegister}>
-          <div class="input-field">
+          <div className="input-field">
             <input type="text" required onChange={(e) => setName(e.target.value)} />
             <label>Name</label>
           </div>
-          <div class="input-field">
+          <div className="input-field">
             <input type="text" required onChange={(e) => setEmail(e.target.value)}/>
             <label>Email</label>
           </div>
-          <div class="input-field">
+          <div className="input-field">
             <input type="password" required onChange={(e) => setPassword(e.target.value)}/>
             <label>Password</label>
           </div>
           <button type="submit" className="mt-12">Sign Up</button>
-          <div class="register">
+          <div className="register">
             <p>Already registered? <a onClick={() => navigate("/")}>Login</a></p>
           </div>
         </form>

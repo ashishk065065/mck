@@ -15,7 +15,6 @@ export default function Dashboard() {
           const userRef = doc(db, "users", user.uid);
           const userSnap = await getDoc(userRef);
           if (userSnap.exists()) {
-            console.log(userSnap.data());
             setUserData(userSnap.data());
           } else {
             console.log("No user document found!");
@@ -32,7 +31,7 @@ export default function Dashboard() {
   }, [navigate]);
 
   return (
-    <div>
+    <div className="wrapper">
       <h2>{userData?.name}</h2>
       <button onClick={() => signOut(auth)}>Logout</button>
     </div>
