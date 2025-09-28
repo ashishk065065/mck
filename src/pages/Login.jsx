@@ -23,25 +23,25 @@ export default function Login() {
     <div className="login-register">
       <h2 className="app-heading">Vanaja's</h2>
       <h2 className="app-heading">Mathematical Concept Kit</h2>
-      <div class="wrapper">
+      <div className="wrapper">
         <form onSubmit={handleLogin}>
           <h2>Login</h2>
-          <div class="input-field">
+          <div className="input-field">
             <input type="text" required onChange={(e) => setEmail(e.target.value)}/>
             <label>Email</label>
           </div>
-          <div class="input-field">
+          <div className="input-field">
             <input type="password" required onChange={(e) => setPassword(e.target.value)}/>
             <label>Password</label>
           </div>
-          <div class="forget">
-            <label for="remember">
-              <input type="checkbox" id="remember"/>
-              <p>Remember me</p>
+          <div className="forget">
+            <label htmlFor="remember">
+              <input type="checkbox" id="remember" style={{marginRight: '8px'}}/>
+              Remember me
             </label>
           </div>
           <button type="submit">Log In</button>
-          <div class="register">
+          <div className="register">
             <p>Don't have an account? <a onClick={() => navigate("/register")}>Register</a></p>
           </div>
         </form>
