@@ -231,3 +231,17 @@ button:hover {
   height: calc(100% - 20px);
   margin: 10px;
 }
+
+.link-text {
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+}
+
+.link-text:hover {
+    background: none;
+    text-decoration: underline;
+}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
 
 export default function Register() {
@@ -38,23 +38,31 @@ export default function Register() {
         <h2>Register</h2>
         <form onSubmit={handleRegister}>
           <div className="input-field">
-            <input type="text" required onChange={(e) => setName(e.target.value)} />
-            <label>Name</label>
+            <label htmlFor="name">Name</label>
+            <input id="name" type="text" required onChange={(e) => setName(e.target.value)} />
           </div>
           <div className="input-field">
-            <input type="text" required onChange={(e) => setEmail(e.target.value)} />
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
+            <input id="email" type="text" required onChange={(e) => setEmail(e.target.value)} />
           </div>
           <div className="input-field">
-            <input type="password" required onChange={(e) => setPassword(e.target.value)} />
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <button type="submit" className="mt-12">
             Sign Up
           </button>
           <div className="register">
             <p>
-              Already registered? <a onClick={() => navigate('/')}>Login</a>
+              Already registered?{' '}
+              <Link className="link-button" to={'/'}>
+                Login
+              </Link>
             </p>
           </div>
         </form>
