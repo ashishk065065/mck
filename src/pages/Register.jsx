@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../firebase";
-import { useNavigate } from "react-router-dom";
-import { doc, setDoc } from "firebase/firestore";
+import { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+import { doc, setDoc } from 'firebase/firestore';
 
 export default function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -17,15 +17,15 @@ export default function Register() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
+      await setDoc(doc(db, 'users', user.uid), {
         name: name,
         email: email,
         level: 1,
         overallScore: 0,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       });
 
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
     }
@@ -42,19 +42,23 @@ export default function Register() {
             <label>Name</label>
           </div>
           <div className="input-field">
-            <input type="text" required onChange={(e) => setEmail(e.target.value)}/>
+            <input type="text" required onChange={(e) => setEmail(e.target.value)} />
             <label>Email</label>
           </div>
           <div className="input-field">
-            <input type="password" required onChange={(e) => setPassword(e.target.value)}/>
+            <input type="password" required onChange={(e) => setPassword(e.target.value)} />
             <label>Password</label>
           </div>
-          <button type="submit" className="mt-12">Sign Up</button>
+          <button type="submit" className="mt-12">
+            Sign Up
+          </button>
           <div className="register">
-            <p>Already registered? <a onClick={() => navigate("/")}>Login</a></p>
+            <p>
+              Already registered? <a onClick={() => navigate('/')}>Login</a>
+            </p>
           </div>
         </form>
-        {error && <p style={{color:"red"}}>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
     </div>
   );

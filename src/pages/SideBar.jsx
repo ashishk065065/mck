@@ -1,20 +1,14 @@
-import { IconButton } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import ProfileIcon from "@mui/icons-material/AccountCircle";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import LogoutIcon from "@mui/icons-material/Logout";
-import QuizIcon from "@mui/icons-material/Quiz";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import SportsScoreIcon from "@mui/icons-material/SportsScore";
-import "./Dashboard.css";
+import { IconButton } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import ProfileIcon from '@mui/icons-material/AccountCircle';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import LogoutIcon from '@mui/icons-material/Logout';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
+import './Dashboard.css';
 
-export default function SideBar({
-  userData,
-  toggleSidebar,
-  sidebarOpen,
-  handleSignOut,
-}) {
+export default function SideBar({ userData, toggleSidebar, sidebarOpen, handleSignOut }) {
   return (
     <div className="sidebar">
       {!sidebarOpen ? (
@@ -22,9 +16,6 @@ export default function SideBar({
           <div className="top-icons">
             <IconButton>
               <HomeIcon />
-            </IconButton>
-            <IconButton>
-              <QuizIcon />
             </IconButton>
             <IconButton>
               <SportsScoreIcon />
@@ -53,12 +44,6 @@ export default function SideBar({
                 <HomeIcon />
               </IconButton>
               <span className="icon-label">Home</span>
-            </div>
-            <div>
-              <IconButton>
-                <QuizIcon />
-              </IconButton>
-              <span className="icon-label">Quiz</span>
             </div>
             <div>
               <IconButton>

@@ -19,11 +19,7 @@ function CircularProgressWithSymbolLabel(props) {
           justifyContent: 'center',
         }}
       >
-        <Typography
-          variant="h5"
-          component="div"
-          sx={{ color: 'white', fontSize: '3rem' }}
-        >
+        <Typography variant="h5" component="div" sx={{ color: 'white', fontSize: '3rem' }}>
           {props.symbol}
         </Typography>
       </Box>

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { auth, db } from "../firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
-import SideBar from "./SideBar";
+import { useEffect, useState } from 'react';
+import { auth, db } from '../firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import SideBar from './SideBar';
 
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
@@ -15,18 +15,18 @@ export default function Dashboard() {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         try {
-          const userRef = doc(db, "users", user.uid);
+          const userRef = doc(db, 'users', user.uid);
           const userSnap = await getDoc(userRef);
           if (userSnap.exists()) {
             setUserData(userSnap.data());
           } else {
-            console.log("No user document found!");
+            console.log('No user document found!');
           }
         } catch (err) {
-          console.error("Error fetching user data:", err);
+          console.error('Error fetching user data:', err);
         }
       } else {
-        navigate("/");
+        navigate('/');
       }
     });
     return () => unsubscribe();
@@ -39,10 +39,10 @@ export default function Dashboard() {
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        navigate("/");
+        navigate('/');
       })
       .catch((error) => {
-        console.error("Error signing out:", error);
+        console.error('Error signing out:', error);
       });
   };
 
@@ -53,7 +53,12 @@ export default function Dashboard() {
   return (
     <div>
       {loggedIn && (
-        <SideBar userData={userData} toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} handleSignOut={handleSignOut} />
+        <SideBar
+          userData={userData}
+          toggleSidebar={toggleSidebar}
+          sidebarOpen={sidebarOpen}
+          handleSignOut={handleSignOut}
+        />
       )}
     </div>
   );
