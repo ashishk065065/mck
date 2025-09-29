@@ -50,7 +50,7 @@ export default function Login() {
   }, [isDemoLogin, email, password]);
 
   return (
-    <div>
+    <div className="centered-container">
       {loading ? (
         <Loading />
       ) : (
@@ -76,7 +76,6 @@ export default function Login() {
               </div>
             </form>
           </div>
-
         </div>
       )}
     </div>

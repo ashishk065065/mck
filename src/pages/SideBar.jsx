@@ -1,0 +1,99 @@
+import { IconButton } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import ProfileIcon from "@mui/icons-material/AccountCircle";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import LogoutIcon from "@mui/icons-material/Logout";
+import QuizIcon from "@mui/icons-material/Quiz";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import SportsScoreIcon from "@mui/icons-material/SportsScore";
+import "./Dashboard.css";
+
+export default function SideBar({
+  userData,
+  toggleSidebar,
+  sidebarOpen,
+  handleSignOut,
+}) {
+  return (
+    <div className="sidebar">
+      {!sidebarOpen ? (
+        <div className="sidebar-closed">
+          <div className="top-icons">
+            <IconButton>
+              <HomeIcon />
+            </IconButton>
+            <IconButton>
+              <QuizIcon />
+            </IconButton>
+            <IconButton>
+              <SportsScoreIcon />
+            </IconButton>
+            <IconButton>
+              <FullscreenIcon />
+            </IconButton>
+          </div>
+          <div className="bottom-icons">
+            <IconButton onClick={toggleSidebar}>
+              <KeyboardDoubleArrowRightIcon />
+            </IconButton>
+            <IconButton onClick={handleSignOut}>
+              <LogoutIcon />
+            </IconButton>
+            <IconButton>
+              <ProfileIcon />
+            </IconButton>
+          </div>
+        </div>
+      ) : (
+        <div className="sidebar-open">
+          <div className="top-icons">
+            <div>
+              <IconButton>
+                <HomeIcon />
+              </IconButton>
+              <span className="icon-label">Home</span>
+            </div>
+            <div>
+              <IconButton>
+                <QuizIcon />
+              </IconButton>
+              <span className="icon-label">Quiz</span>
+            </div>
+            <div>
+              <IconButton>
+                <SportsScoreIcon />
+              </IconButton>
+              <span className="icon-label">Scores</span>
+            </div>
+            <div>
+              <IconButton>
+                <FullscreenIcon />
+              </IconButton>
+              <span className="icon-label">Concept Kit</span>
+            </div>
+          </div>
+          <div className="bottom-icons">
+            <div>
+              <IconButton onClick={toggleSidebar}>
+                <KeyboardDoubleArrowLeftIcon />
+              </IconButton>
+            </div>
+            <div>
+              <IconButton onClick={handleSignOut}>
+                <LogoutIcon />
+              </IconButton>
+              <span className="icon-label">Sign Out</span>
+            </div>
+            <div>
+              <IconButton>
+                <ProfileIcon />
+              </IconButton>
+              <span className="icon-label">{userData.name}</span>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

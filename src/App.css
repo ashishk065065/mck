@@ -1,8 +1,8 @@
 #root {
-  max-width: 100%;
-  max-height: 100%;
-  padding: 2rem;
-  height: 100%
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
 }
 
 * {
@@ -10,6 +10,15 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
+}
+
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
 }
 
 .login-register {
@@ -20,11 +29,12 @@
 }
 
 .app-heading {
-  color: white;
-  position: relative;
-  z-index: 1;
-  font-size: 35px;
-  margin-bottom: 5px !important;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0 !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -32,10 +42,23 @@ body {
   width: 100%;
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #23437d 0%, #8e99a8 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
   position: relative;
   overflow-x: hidden;
   justify-content: center;
+  color: #ffffff;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 0;
 }
 
 .background-shape {
@@ -158,22 +181,20 @@ h2 {
 }
 
 button {
-  background: #fff;
-  color: #000;
+  background: #3b82f6;
+  color: #ffffff;
   font-weight: 600;
   border: none;
   padding: 12px 20px;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 5px;
   font-size: 16px;
-  border: 2px solid transparent;
   transition: 0.3s ease;
 }
 
 button:hover {
-  color: #fff;
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.15);
+  background: #1e3a8a;
+  color: #ffffff;
 }
 
 .register {
@@ -185,4 +206,13 @@ button:hover {
 
 .mt-12 {
   margin-top: 12px;
+}
+
+.sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  margin: 10px;
 }

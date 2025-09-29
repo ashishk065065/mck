@@ -32,7 +32,7 @@ export default function Register() {
   };
 
   return (
-    <div className="login-register">
+    <div className="login-register centered-container">
       <h2 className="app-heading">Mathematical Concept Kit</h2>
       <div className="wrapper">
         <h2>Register</h2>

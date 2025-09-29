@@ -3,11 +3,13 @@ import { auth, db } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import SideBar from "./SideBar";
 
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -32,15 +34,26 @@ export default function Dashboard() {
 
   useEffect(() => {
     setLoggedIn(userData !== null);
-  }, [userData])
+  }, [userData]);
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen((prev) => !prev);
+  };
 
   return (
     <div>
       {loggedIn && (
-      <div className="wrapper">
-        <h2>{userData?.name}</h2>
-        <button onClick={() => signOut(auth)}>Logout</button>
-      </div>
+        <SideBar userData={userData} toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} handleSignOut={handleSignOut} />
       )}
     </div>
   );
