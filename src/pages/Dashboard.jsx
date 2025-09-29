@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -26,14 +27,21 @@ export default function Dashboard() {
         navigate("/");
       }
     });
-
     return () => unsubscribe();
   }, [navigate]);
 
+  useEffect(() => {
+    setLoggedIn(userData !== null);
+  }, [userData])
+
   return (
-    <div className="wrapper">
-      <h2>{userData?.name}</h2>
-      <button onClick={() => signOut(auth)}>Logout</button>
+    <div>
+      {loggedIn && (
+      <div className="wrapper">
+        <h2>{userData?.name}</h2>
+        <button onClick={() => signOut(auth)}>Logout</button>
+      </div>
+      )}
     </div>
   );
 }

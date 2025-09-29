@@ -33,7 +33,6 @@ export default function Register() {
 
   return (
     <div className="login-register">
-      <h2 className="app-heading">Vanaja's</h2>
       <h2 className="app-heading">Mathematical Concept Kit</h2>
       <div className="wrapper">
         <h2>Register</h2>

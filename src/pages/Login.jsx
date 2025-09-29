@@ -55,7 +55,6 @@ export default function Login() {
         <Loading />
       ) : (
         <div className="login-register">
-          <h2 className="app-heading">Vanaja's</h2>
           <h2 className="app-heading">Mathematical Concept Kit</h2>
           <div className={error ? 'error-wrapper' : 'wrapper'}>
             <form onSubmit={handleLogin}>
@@ -77,6 +76,7 @@ export default function Login() {
               </div>
             </form>
           </div>
+
         </div>
       )}
     </div>
