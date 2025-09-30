@@ -38,18 +38,28 @@ export default function Register() {
         <h2>Register</h2>
         <form onSubmit={handleRegister}>
           <div className="input-field">
-            <label htmlFor="name">Name</label>
-            <input id="name" type="text" required onChange={(e) => setName(e.target.value)} />
+            <input
+              id="name"
+              type="text"
+              placeholder="Name"
+              required
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div className="input-field">
-            <label htmlFor="email">Email</label>
-            <input id="email" type="text" required onChange={(e) => setEmail(e.target.value)} />
+            <input
+              id="email"
+              type="text"
+              placeholder="Email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="input-field">
-            <label htmlFor="password">Password</label>
             <input
               id="password"
               type="password"
+              placeholder="Password"
               required
               onChange={(e) => setPassword(e.target.value)}
             />

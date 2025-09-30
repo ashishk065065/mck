@@ -8,19 +8,25 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import './Dashboard.css';
 
-export default function SideBar({ userData, toggleSidebar, sidebarOpen, handleSignOut }) {
+export default function SideBar({
+  userData,
+  toggleSidebar,
+  sidebarOpen,
+  handleSignOut,
+  setSelectedMenuItem,
+}) {
   return (
-    <div className="sidebar">
+    <>
       {!sidebarOpen ? (
         <div className="sidebar-closed">
           <div className="top-icons">
-            <IconButton>
+            <IconButton onClick={() => setSelectedMenuItem('home')}>
               <HomeIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => setSelectedMenuItem('score')}>
               <SportsScoreIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => setSelectedMenuItem('kit')}>
               <FullscreenIcon />
             </IconButton>
           </div>
@@ -40,19 +46,19 @@ export default function SideBar({ userData, toggleSidebar, sidebarOpen, handleSi
         <div className="sidebar-open">
           <div className="top-icons">
             <div>
-              <IconButton>
+              <IconButton onClick={() => setSelectedMenuItem('home')}>
                 <HomeIcon />
               </IconButton>
               <span className="icon-label">Home</span>
             </div>
             <div>
-              <IconButton>
+              <IconButton onClick={() => setSelectedMenuItem('score')}>
                 <SportsScoreIcon />
               </IconButton>
               <span className="icon-label">Scores</span>
             </div>
             <div>
-              <IconButton>
+              <IconButton onClick={() => setSelectedMenuItem('kit')}>
                 <FullscreenIcon />
               </IconButton>
               <span className="icon-label">Concept Kit</span>
@@ -79,6 +85,6 @@ export default function SideBar({ userData, toggleSidebar, sidebarOpen, handleSi
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

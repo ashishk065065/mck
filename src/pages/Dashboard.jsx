@@ -4,12 +4,16 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import SideBar from './SideBar';
+import Home from './Home';
+import ConceptKit from './ConceptKitComponents/ConceptKit.jsx';
+import Score from './Score';
 
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState('home');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -53,12 +57,24 @@ export default function Dashboard() {
   return (
     <div>
       {loggedIn && (
-        <SideBar
-          userData={userData}
-          toggleSidebar={toggleSidebar}
-          sidebarOpen={sidebarOpen}
-          handleSignOut={handleSignOut}
-        />
+        <div className="dashboard">
+          <SideBar
+            userData={userData}
+            toggleSidebar={toggleSidebar}
+            sidebarOpen={sidebarOpen}
+            handleSignOut={handleSignOut}
+            setSelectedMenuItem={setSelectedMenuItem}
+          />
+          <div className={`dashboard-content ${sidebarOpen ? 'sidebar-open-content' : ''}`}>
+            {selectedMenuItem === 'home' ? (
+              <Home />
+            ) : selectedMenuItem === 'score' ? (
+              <Score />
+            ) : (
+              <ConceptKit />
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

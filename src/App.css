@@ -223,13 +223,15 @@ button:hover {
   margin-top: 12px;
 }
 
-.sidebar {
-  position: absolute;
+.dashboard {
+  position: fixed;
   left: 0;
   top: 0;
   width: calc(100% - 20px);
   height: calc(100% - 20px);
   margin: 10px;
+    display: flex;
+    flex-direction: row;
 }
 
 .link-text {
@@ -244,4 +246,8 @@ button:hover {
 .link-text:hover {
     background: none;
     text-decoration: underline;
+}
+
+input::placeholder {
+    color: #fff;
 }
