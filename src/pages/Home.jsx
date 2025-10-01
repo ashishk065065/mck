@@ -25,12 +25,36 @@ export default function Home() {
     }
   };
 
+  const handleTouchStart = () => {
+    dragging.current = true;
+    document.body.style.cursor = 'col-resize';
+  };
+
+  const handleTouchMove = (e) => {
+    if (dragging.current && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const touch = e.touches[0];
+      let percent = ((touch.clientX - rect.left) / rect.width) * 100;
+      percent = Math.max(35, Math.min(percent, 100 - 35));
+      setQuizWidthPercent(percent);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    dragging.current = false;
+    document.body.style.cursor = 'default';
+  };
+
   React.useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
 
@@ -48,6 +72,7 @@ export default function Home() {
           zIndex: 1,
         }}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         onKeyDown={(e) => {
           if (e.key === 'ArrowLeft') setQuizWidthPercent((p) => Math.max(35, p - 2));
           if (e.key === 'ArrowRight') setQuizWidthPercent((p) => Math.min(65, p + 2));
