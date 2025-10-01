@@ -12,7 +12,6 @@ const Sector3 = () => {
     }
   };
 
-  // Define columns with circle ids and colors
   const columns = [
     { ids: ['c1'], color: 'red' },
     { ids: ['c2'], color: 'red' },
@@ -20,7 +19,7 @@ const Sector3 = () => {
     { ids: ['c4'], color: 'red' },
     { ids: ['c5'], color: 'red' },
     { ids: ['c6'], color: 'red' },
-    { ids: ['c13', 'c14'], colors: ['red', 'yellow'] }, // mixed colors
+    { ids: ['c13', 'c14'], colors: ['red', 'yellow'] },
     { ids: ['c7'], color: 'yellow' },
     { ids: ['c8'], color: 'yellow' },
     { ids: ['c9'], color: 'yellow' },
@@ -34,7 +33,7 @@ const Sector3 = () => {
       {columns.map((col, colIndex) => (
         <div key={colIndex} id={`column${colIndex + 1}`} className="sector3Columns">
           {col.ids.map((id, idx) => {
-            const color = col.colors?.[idx] || col.color || ''; // supports mixed colors
+            const color = col.colors?.[idx] || col.color || '';
             return (
               <div
                 key={id}

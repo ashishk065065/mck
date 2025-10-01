@@ -71,7 +71,9 @@ export default function Dashboard() {
             ) : selectedMenuItem === 'score' ? (
               <Score />
             ) : (
-              <ConceptKit />
+              <div className="conceptKit-div">
+                <ConceptKit />
+              </div>
             )}
           </div>
         </div>

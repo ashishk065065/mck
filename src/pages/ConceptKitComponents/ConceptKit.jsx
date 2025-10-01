@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './ConceptKit.css';
 import Sector1 from './sector1.jsx';
 import Numbers from './numbers.jsx';
@@ -11,9 +11,21 @@ import Sector4 from './sector4.jsx';
 
 export default function ConceptKit() {
   const [selectedApp, setSelectedApp] = useState('mathematical concept kit');
-  console.log(selectedApp);
+  const baseScale = 1.8;
+  const [scale, setScale] = useState(baseScale / window.devicePixelRatio);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setScale(baseScale / window.devicePixelRatio);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className="conceptKit-div">
+    <>
       <div>
         <select
           className="selectApp"
@@ -29,7 +41,7 @@ export default function ConceptKit() {
           </option>
         </select>
       </div>
-      <div className="innovationDiv">
+      <div className="innovationDiv" style={{ transform: `scale(${scale})` }}>
         <Sector1 />
         <Numbers />
         <Sector2 />
@@ -38,6 +50,6 @@ export default function ConceptKit() {
         <Sector4 />
         {selectedApp === 'algebraic mathematical concept kit' && <Sector5App2 />}
       </div>
-    </div>
+    </>
   );
 }
