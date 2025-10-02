@@ -11,18 +11,6 @@ import Sector4 from './sector4.jsx';
 
 export default function ConceptKit() {
   const [selectedApp, setSelectedApp] = useState('mathematical concept kit');
-  const baseScale = 1.8;
-  const [scale, setScale] = useState(baseScale / window.devicePixelRatio);
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      setScale(baseScale / window.devicePixelRatio);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   return (
     <>
@@ -41,7 +29,7 @@ export default function ConceptKit() {
           </option>
         </select>
       </div>
-      <div className="innovationDiv" style={{ transform: `scale(${scale})` }}>
+      <div className="innovationDiv" style={{ transform: `scale(0.9)` }}>
         <Sector1 />
         <Numbers />
         <Sector2 />
