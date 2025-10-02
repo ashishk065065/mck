@@ -19,7 +19,7 @@ export default function ConceptKit() {
 
   return (
     <>
-      <div style={{ width: '400px' }}>
+      <div style={{ width: '400px', margin: '20px' }}>
         <FormControl fullWidth className="selectKit">
           <Select
             labelId="demo-simple-select-label"

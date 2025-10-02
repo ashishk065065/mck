@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from '@mui/material';
-import { topics } from '../assets/topics.js';
+import { constants } from '../assets/constants.js';
 import React from 'react';
 
 export default function QuizApp() {
@@ -10,7 +10,7 @@ export default function QuizApp() {
       <div className="quizApp-header">
         <Autocomplete
           disablePortal
-          options={topics}
+          options={constants}
           sx={{ width: 250 }}
           renderInput={(params) => <TextField {...params} label="Topic" />}
           value={selectedTopic}
