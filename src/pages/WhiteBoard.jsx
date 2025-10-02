@@ -12,16 +12,8 @@ export default function WhiteBoard() {
   };
 
   const handleClear = () => {
-    if (alignment === 'type') {
-      const textarea = document.getElementById('type-area');
-      if (textarea) textarea.value = '';
-    } else {
-      const canvas = canvasRef.current;
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
+    const textarea = document.getElementById('type-area');
+    if (textarea) textarea.value = '';
   };
 
   const startDrawing = (e) => {
@@ -59,10 +51,10 @@ export default function WhiteBoard() {
   React.useEffect(() => {
     if (canvasRef.current && parentRef.current) {
       const { offsetWidth, offsetHeight } = parentRef.current;
-      canvasRef.current.width = offsetWidth;
-      canvasRef.current.height = offsetHeight;
+      canvasRef.current.width = offsetWidth - 10;
+      canvasRef.current.height = offsetHeight - 10;
     }
-  }, [alignment, parentRef]);
+  }, [alignment, parentRef?.current?.offsetWidth, parentRef?.current?.offsetHeight]);
 
   return (
     <>
@@ -77,9 +69,11 @@ export default function WhiteBoard() {
           <ToggleButton value="type">Type</ToggleButton>
           <ToggleButton value="draw">Draw</ToggleButton>
         </ToggleButtonGroup>
-        <button className="clear" onClick={handleClear}>
-          Clear
-        </button>
+        {alignment === 'type' && (
+          <button className="clear" onClick={handleClear}>
+            Clear
+          </button>
+        )}
       </div>
       <div className="type-draw-div" ref={parentRef}>
         {alignment === 'type' ? (

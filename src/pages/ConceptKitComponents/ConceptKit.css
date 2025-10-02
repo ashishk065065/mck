@@ -94,6 +94,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    user-select: none;
 }
 
 .sector3Columns {
@@ -125,6 +126,7 @@ body {
     appearance: none;
     outline: none;
     text-align: center;
+    user-select: none;
 }
 
 .gridSelectApp {
@@ -136,4 +138,22 @@ body {
     no-repeat right 12px center;
     background-size: 16px;
     padding-right: 40px;
+}
+
+.selectKit {
+    .MuiInputBase-root {
+        background-color: #1e3a8a;
+        border-radius: 5px;
+    }
+    .MuiFormLabel-root {
+        color: #fff !important;
+    }
+    #kit-select {
+        color: #fff !important;
+        padding-top: 7px !important;
+        padding-bottom: 7px !important;
+    }
+    legend {
+        max-width: 0 !important;
+    }
 }

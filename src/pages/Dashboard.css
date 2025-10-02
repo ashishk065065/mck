@@ -111,7 +111,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 2% 3%;
     width: 100%;
     .MuiToggleButton-root {
         border-width: 1px; !important;
@@ -137,8 +137,6 @@
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     height: 100%;
-    backdrop-filter: blur(9px);
-    -webkit-backdrop-filter: blur(9px);
     .type-area {
         width: 100%;
         height: 100%;
@@ -155,5 +153,34 @@
     }
     textarea:focus-visible {
         outline: none;
+    }
+}
+
+.quiz {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .quizApp-header{
+        margin-top: 20px;
+        .MuiAutocomplete-root {
+            background: #1e3a8a;
+            border-radius: 5px;
+        }
+        .MuiOutlinedInput-root{
+            padding: 0 !important;
+        }
+        .MuiOutlinedInput-input {
+            color: #fff !important;
+        }
+        .MuiAutocomplete-input {
+            padding: 7px 10px !important;
+        }
+        .MuiFormLabel-root {
+            color: #fff !important;
+            top: -10px !important;
+        }
+        .MuiInputLabel-shrink {
+            transform: translate(14px, 1px) scale(0.75);
+        }
     }
 }

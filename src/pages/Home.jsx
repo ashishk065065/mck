@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ConceptKit from './ConceptKitComponents/ConceptKit.jsx';
 import WhiteBoard from './WhiteBoard.jsx';
+import QuizApp from './QuizApp.jsx';
 
 export default function Home() {
   const [quizWidthPercent, setQuizWidthPercent] = useState(35);
@@ -122,7 +123,9 @@ export default function Home() {
           height: '100%',
         }}
       >
-        <div className="quiz" style={{ height: `${verticalPercent}%`, minHeight: '20%' }}></div>
+        <div className="quiz" style={{ height: `${verticalPercent}%`, minHeight: '20%' }}>
+          <QuizApp />
+        </div>
         <div
           className="vertical-resizer"
           role="button"
