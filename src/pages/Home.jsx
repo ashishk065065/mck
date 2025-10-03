@@ -3,7 +3,7 @@ import ConceptKit from './ConceptKitComponents/ConceptKit.jsx';
 import WhiteBoard from './WhiteBoard.jsx';
 import QuizApp from './QuizApp.jsx';
 
-export default function Home() {
+export default function Home({ selectedMenuItem, setSelectedMenuItem }) {
   const [quizWidthPercent, setQuizWidthPercent] = useState(35);
   const [verticalPercent, setVerticalPercent] = useState(35);
   const containerRef = useRef(null);
@@ -168,7 +168,7 @@ export default function Home() {
         }}
       />
       <div className="home-kit" style={{ width: `${100 - quizWidthPercent}%`, minWidth: '35%' }}>
-        <ConceptKit />
+        <ConceptKit selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} />
       </div>
     </div>
   );

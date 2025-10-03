@@ -205,8 +205,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 10px;
         height: 100%;
+        width: 100%;
     }
     .quiz-button {
         height: 37px;
@@ -218,5 +218,23 @@
     .quiz-button:hover {
         background: #1e3a8a;
         color: #ffffff;
+    }
+    .quiz-button:disabled {
+        cursor: not-allowed;
+    }
+    .quizApp-question {
+        .MuiInputBase-input {
+            padding: 7px !important;
+        }
+        .MuiInputLabel-root {
+            color: #fff !important;
+            top: -10px !important;
+        }
+        .MuiInputLabel-shrink {
+            transform: translate(14px, 1px) scale(0.75);
+        }
+        .MuiOutlinedInput-input {
+            color: #fff !important;
+        }
     }
 }

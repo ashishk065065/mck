@@ -67,12 +67,15 @@ export default function Dashboard() {
           />
           <div className={`dashboard-content ${sidebarOpen ? 'sidebar-open-content' : ''}`}>
             {selectedMenuItem === 'home' ? (
-              <Home />
+              <Home selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} />
             ) : selectedMenuItem === 'score' ? (
               <Score />
             ) : (
               <div className="conceptKit-div">
-                <ConceptKit />
+                <ConceptKit
+                  selectedMenuItem={selectedMenuItem}
+                  setSelectedMenuItem={setSelectedMenuItem}
+                />
               </div>
             )}
           </div>

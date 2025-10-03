@@ -9,8 +9,10 @@ import Sector4App3 from './sector4App3.jsx';
 import Sector5App2 from './Sector5App2.jsx';
 import Sector4 from './sector4.jsx';
 import { FormControl, MenuItem, Select } from '@mui/material';
+import FullscreenExitTwoToneIcon from '@mui/icons-material/FullscreenExitTwoTone';
+import FullscreenTwoToneIcon from '@mui/icons-material/FullscreenTwoTone';
 
-export default function ConceptKit() {
+export default function ConceptKit({ selectedMenuItem, setSelectedMenuItem }) {
   const [selectedApp, setSelectedApp] = useState('mathematical concept kit');
 
   const handleChange = (event) => {
@@ -19,8 +21,8 @@ export default function ConceptKit() {
 
   return (
     <>
-      <div style={{ width: '400px', margin: '20px' }}>
-        <FormControl fullWidth className="selectKit">
+      <div className="kit-header">
+        <FormControl className="selectKit" style={{ width: '400px' }}>
           <Select
             labelId="demo-simple-select-label"
             id="kit-select"
@@ -38,6 +40,27 @@ export default function ConceptKit() {
             </MenuItem>
           </Select>
         </FormControl>
+        {selectedMenuItem === 'fullscreen-kit' ? (
+          <button
+            title="Exit Fullscreen"
+            className="borderButton"
+            onClick={() => {
+              setSelectedMenuItem('home');
+            }}
+          >
+            <FullscreenExitTwoToneIcon />
+          </button>
+        ) : (
+          <button
+            title="Fullscreen"
+            className="borderButton"
+            onClick={() => {
+              setSelectedMenuItem('fullscreen-kit');
+            }}
+          >
+            <FullscreenTwoToneIcon />
+          </button>
+        )}
       </div>
       <div className="innovationDiv" style={{ transform: `scale(0.9)` }}>
         <Sector1 />

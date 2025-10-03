@@ -1,16 +1,64 @@
-import { Autocomplete, FormControl, FormControlLabel, RadioGroup, TextField } from '@mui/material';
-import Radio from '@mui/material/Radio';
-import { constants } from '../assets/constants.js';
-import React from 'react';
+import { Autocomplete, TextField } from '@mui/material';
+import { constants, topicSymbols } from '../assets/constants.js';
+import React, { useEffect } from 'react';
+import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
 
 export default function QuizApp() {
   const [selectedTopic, setSelectedTopic] = React.useState(null);
   const [quizStarted, setQuizStarted] = React.useState(false);
+  const [questions, setQuestions] = React.useState([]);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [userAnswer, setUserAnswer] = React.useState('');
+  const [feedback, setFeedback] = React.useState('');
+  const [completed, setCompleted] = React.useState(false);
+
+  useEffect(() => {
+    if (selectedTopic) {
+      const operator = topicSymbols[selectedTopic];
+      const sampleQuestions = Array.from({ length: 5 }, () => {
+        const number1 = Math.floor(Math.random() * 10000) + 1;
+        const number2 = Math.floor(Math.random() * 10000) + 1;
+        let answer;
+        if (operator === '/' && number2 === 0) {
+          answer = 'undefined';
+        } else {
+          answer = Function(`return ${number1} ${operator} ${number2}`)();
+        }
+        return {
+          question: `What is ${number1} ${operator} ${number2}?`,
+          answer,
+        };
+      });
+      setQuestions(sampleQuestions);
+      setCurrentIndex(0);
+      setUserAnswer('');
+      setFeedback('');
+      setCompleted(false);
+    }
+  }, [selectedTopic]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!questions.length) return;
+    const correctAnswer = String(questions[currentIndex].answer);
+    if (userAnswer.trim() === correctAnswer) {
+      if (currentIndex + 1 < questions.length) {
+        setCurrentIndex(currentIndex + 1);
+        setUserAnswer('');
+        setFeedback('');
+      } else {
+        setCompleted(true);
+      }
+    } else {
+      setFeedback('Incorrect, try again.');
+    }
+  };
 
   return (
     <>
-      <div className={`quizApp-header ${selectedTopic === null ? 'quizApp-header-center' : ''}`}>
-        {selectedTopic === null && <h3>Choose the topic to start quiz</h3>}
+      <div
+        className={`quizApp-header ${selectedTopic !== null && quizStarted === true ? '' : 'quizApp-header-center'}`}
+      >
         <div
           style={{
             display: 'flex',
@@ -30,48 +78,63 @@ export default function QuizApp() {
             }}
             disabled={selectedTopic !== null && quizStarted === true}
           />
-          {quizStarted === true && (
+          {quizStarted === true ? (
             <button
               className="quiz-button"
               onClick={() => {
                 setQuizStarted(false);
+                setCurrentIndex(0);
+                setSelectedTopic(null);
+                setUserAnswer('');
+                setFeedback('');
+                setCompleted(false);
+                setQuestions([]);
               }}
             >
               End
             </button>
+          ) : (
+            <button
+              className="quiz-button"
+              onClick={() => {
+                setQuizStarted(true);
+              }}
+              disabled={selectedTopic === null}
+            >
+              Start Quiz
+            </button>
           )}
         </div>
       </div>
-      {selectedTopic && quizStarted === false && (
-        <div className="quizApp-body">
-          <button className="quiz-button" onClick={() => {}}>
-            Help
-          </button>
-          <button
-            className="quiz-button"
-            onClick={() => {
-              setQuizStarted(true);
-            }}
-          >
-            Start Quiz
-          </button>
-        </div>
-      )}
       {selectedTopic && quizStarted && (
-        <div style={{ marginTop: '20px' }}>
-          <FormControl>
-            <span style={{ fontSize: '20px' }}>1111 + 2222</span>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue=""
-              name="radio-buttons-group"
-            >
-              <FormControlLabel value="3333" control={<Radio />} label="3333" />
-              <FormControlLabel value="4444" control={<Radio />} label="4444" />
-              <FormControlLabel value="5555" control={<Radio />} label="5555" />
-              <FormControlLabel value="1111" control={<Radio />} label="1111" />
-            </RadioGroup>
-          </FormControl>
+        <div className="quizApp-body">
+          {completed ? (
+            <div className="quizApp-complete">Quiz complete! Well done.</div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div className="quizApp-question">
+                <p
+                  style={{
+                    marginBottom: '5px',
+                    fontSize: 'large',
+                    color: `${feedback.length > 0 ? 'red' : 'white'}`,
+                  }}
+                >
+                  {questions[currentIndex]?.question}
+                </p>
+                <TextField
+                  id="outlined-basic"
+                  label="Answer"
+                  variant="outlined"
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                />
+                <button type="submit" className="quiz-button" style={{ marginLeft: '10px' }}>
+                  <CheckTwoToneIcon />
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       )}
     </>

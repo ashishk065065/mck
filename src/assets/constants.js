@@ -3,6 +3,11 @@ export const constants = [
   { label: 'Subtraction', id: 'subtraction' },
   { label: 'Multiplication', id: 'multiplication' },
   { label: 'Division', id: 'division' },
-  { label: 'Decimals', id: 'decimals' },
-  { label: 'Algebra', id: 'algebra' },
 ];
+
+export const topicSymbols = {
+  Addition: '+',
+  Subtraction: '-',
+  Multiplication: '*',
+  Division: '/',
+};
