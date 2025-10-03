@@ -125,7 +125,7 @@
         padding: 5px 20px;
         background-color: transparent;
     }
-    .clear {
+    .borderButton {
         border: 0.5px solid #1e3a8a;
     }
 }
@@ -161,6 +161,7 @@
     align-items: center;
     .quizApp-header{
         margin-top: 20px;
+        align-items: center;
         .MuiAutocomplete-root {
             background: #1e3a8a;
             border-radius: 5px;
@@ -181,5 +182,40 @@
         .MuiInputLabel-shrink {
             transform: translate(14px, 1px) scale(0.75);
         }
+        .Mui-disabled {
+            cursor: not-allowed !important;
+            input {
+                color: #fff !important;
+                -webkit-text-fill-color: #fff !important;
+            }
+        }
+    }
+    .quizApp-header-center {
+        margin-top: 0 !important;
+        height: 100%;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .quizApp-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        height: 100%;
+    }
+    .quiz-button {
+        height: 37px;
+        font-weight: 500;
+        padding: 5px 20px;
+        background-color: transparent;
+        border: 0.5px solid #fff;
+    }
+    .quiz-button:hover {
+        background: #1e3a8a;
+        color: #ffffff;
     }
 }

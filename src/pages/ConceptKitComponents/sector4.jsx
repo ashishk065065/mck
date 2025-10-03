@@ -81,6 +81,7 @@ const Sector4 = () => {
                 <option>&lt;</option>
                 <option>&gt;</option>
                 <option>!=</option>
+                <option>.</option>
               </select>
             </div>
           );

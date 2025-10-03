@@ -1,6 +1,9 @@
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Slider, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import React from 'react';
 import BrushTwoToneIcon from '@mui/icons-material/BrushTwoTone';
+import FormatSizeTwoToneIcon from '@mui/icons-material/FormatSizeTwoTone';
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
+import Box from '@mui/material/Box';
 
 export default function WhiteBoard() {
   const [alignment, setAlignment] = React.useState('type');
@@ -8,7 +11,10 @@ export default function WhiteBoard() {
   const [drawing, setDrawing] = React.useState(false);
   const parentRef = React.useRef(null);
   const colorInputRef = React.useRef(null);
-  const [color, setColor] = React.useState('#000000');
+  const [color, setColor] = React.useState('#fff');
+  const [lineWidth, setLineWidth] = React.useState(2);
+  const [fontSize, setFontSize] = React.useState(18);
+  const [showSlider, setShowSlider] = React.useState(false);
 
   const handleChange = (event, newAlignment) => {
     newAlignment !== null && setAlignment(newAlignment);
@@ -39,6 +45,7 @@ export default function WhiteBoard() {
     if (!drawing) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
+    const threshold = 50;
     let x, y;
     if (e.touches) {
       const rect = canvas.getBoundingClientRect();
@@ -49,25 +56,43 @@ export default function WhiteBoard() {
       y = e.nativeEvent.offsetY;
     }
     ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
     ctx.lineTo(x, y);
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(x, y);
+
+    if (y > canvas.height - threshold) {
+      const oldImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      canvas.height = canvas.height + 300;
+      ctx.putImageData(oldImage, 0, 0);
+    }
+
+    if (x > canvas.width - threshold) {
+      const oldImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      canvas.width = canvas.width + 300;
+      ctx.putImageData(oldImage, 0, 0);
+    }
   };
+
+  const handleSliderChange = (e) => {
+    alignment === 'draw'
+      ? setLineWidth(parseInt(e.target.value) * 2)
+      : setFontSize(parseInt(e.target.value) * 2 + 14);
+  };
+
+  React.useEffect(() => {
+    if (showSlider) {
+      const timer = setTimeout(() => setShowSlider(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showSlider]);
 
   const resetPath = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
   };
-
-  React.useEffect(() => {
-    if (canvasRef.current && parentRef.current) {
-      const { offsetWidth, offsetHeight } = parentRef.current;
-      canvasRef.current.width = offsetWidth - 10;
-      canvasRef.current.height = offsetHeight - 10;
-    }
-  }, [alignment, parentRef?.current?.offsetWidth, parentRef?.current?.offsetHeight]);
 
   return (
     <>
@@ -84,41 +109,76 @@ export default function WhiteBoard() {
             <ToggleButton value="draw">Draw</ToggleButton>
           </ToggleButtonGroup>
         </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          {alignment === 'draw' && (
-            <div>
-              <button
-                className="clear"
-                onClick={() => colorInputRef.current && colorInputRef.current.click()}
-              >
-                <BrushTwoToneIcon />
-              </button>
-              <input
-                ref={colorInputRef}
-                className="color-picker"
-                type="color"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-                title="Brush Color"
-                style={{ display: 'none' }}
-              />
-            </div>
-          )}
-          <button className="clear" onClick={handleClear}>
-            Clear
-          </button>
+        <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <button
+              style={{ background: color.includes('#fff') ? '#1e3a8a' : color, padding: '0 3px' }}
+              title="Color"
+              className="borderButton"
+              onClick={() => colorInputRef.current && colorInputRef.current.click()}
+            >
+              <BrushTwoToneIcon />
+            </button>
+            <input
+              ref={colorInputRef}
+              className="color-picker"
+              type="color"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              title="Brush Color"
+              style={{ display: 'block', height: 0, width: 0, marginRight: '10px' }}
+            />
+            {showSlider && (
+              <Box sx={{ width: 100, height: 30, marginRight: '10px' }}>
+                <Slider
+                  aria-label="brushSize"
+                  defaultValue={alignment === 'draw' ? lineWidth / 2 : (fontSize - 14) / 2}
+                  valueLabelDisplay="auto"
+                  shiftStep={1}
+                  step={1}
+                  marks
+                  min={1}
+                  max={5}
+                  onChange={handleSliderChange}
+                />
+              </Box>
+            )}
+            <button
+              style={{ padding: '0 3px', marginRight: '10px' }}
+              title="Size"
+              className="borderButton"
+              onClick={() => setShowSlider((s) => !s)}
+            >
+              <FormatSizeTwoToneIcon />
+            </button>
+            <button
+              style={{ padding: '0 3px' }}
+              className="borderButton"
+              onClick={handleClear}
+              title="Clear"
+            >
+              <DeleteForeverTwoToneIcon />
+            </button>
+          </div>
         </div>
       </div>
-      <div className="type-draw-div" ref={parentRef}>
+      <div
+        className="type-draw-div"
+        ref={parentRef}
+        style={{ overflowY: 'auto', overflowX: 'hidden' }}
+      >
         {alignment === 'type' ? (
           <textarea
             id="type-area"
             className="type-area"
             placeholder="You can start typing here"
+            style={{ fontSize: fontSize, color: color }}
           ></textarea>
         ) : (
           <canvas
             ref={canvasRef}
+            width={400}
+            height={400}
             style={{
               touchAction: 'none',
               borderBottomRightRadius: '20px',
