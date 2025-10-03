@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { FormControl, MenuItem, Select } from '@mui/material';
 
 const Sector4 = () => {
   const circles = [
@@ -32,6 +33,7 @@ const Sector4 = () => {
     '#ff8a65',
   ];
   const [selectedCircles, setSelectedCircles] = useState(circles);
+  const [selectedSymbol, setSelectedSymbol] = useState('=');
 
   const getColumnKey = (idx) => `column${idx + 1}`;
 
@@ -76,13 +78,24 @@ const Sector4 = () => {
         if (colIdx === 6) {
           return (
             <div id="section4DropdownDiv" key="dropdown-col">
-              <select id="section4Dropdown" className="gridSelectApp">
-                <option>=</option>
-                <option>&lt;</option>
-                <option>&gt;</option>
-                <option>!=</option>
-                <option>.</option>
-              </select>
+              <FormControl className="selectKit">
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="kit-select"
+                  value={selectedSymbol}
+                  label="Age"
+                  onChange={(e) => {
+                    setSelectedSymbol(e.target.value);
+                  }}
+                  variant="outlined"
+                >
+                  <MenuItem value="=">=</MenuItem>
+                  <MenuItem value="&lt;">&lt;</MenuItem>
+                  <MenuItem value="&gt;">&gt;</MenuItem>
+                  <MenuItem value="!=">!=</MenuItem>
+                  <MenuItem value=".">.</MenuItem>
+                </Select>
+              </FormControl>
             </div>
           );
         } else {

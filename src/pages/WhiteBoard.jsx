@@ -124,7 +124,6 @@ export default function WhiteBoard() {
                 <BrushTwoToneIcon />
               </button>
             </label>
-
             <input
               id="color-picker"
               ref={colorInputRef}

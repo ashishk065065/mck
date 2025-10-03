@@ -1,4 +1,5 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, FormControl, FormControlLabel, RadioGroup, TextField } from '@mui/material';
+import Radio from '@mui/material/Radio';
 import { constants } from '../assets/constants.js';
 import React from 'react';
 
@@ -56,7 +57,23 @@ export default function QuizApp() {
           </button>
         </div>
       )}
-      {selectedTopic && quizStarted && <div></div>}
+      {selectedTopic && quizStarted && (
+        <div style={{ marginTop: '20px' }}>
+          <FormControl>
+            <span style={{ fontSize: '20px' }}>1111 + 2222</span>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue=""
+              name="radio-buttons-group"
+            >
+              <FormControlLabel value="3333" control={<Radio />} label="3333" />
+              <FormControlLabel value="4444" control={<Radio />} label="4444" />
+              <FormControlLabel value="5555" control={<Radio />} label="5555" />
+              <FormControlLabel value="1111" control={<Radio />} label="1111" />
+            </RadioGroup>
+          </FormControl>
+        </div>
+      )}
     </>
   );
 }

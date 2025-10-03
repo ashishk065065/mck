@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { FormControl, MenuItem, Select } from '@mui/material';
 
 const Sector2 = () => {
+  const [selectedSymbol, setSelectedSymbol] = useState('+');
   const [selectedCircles, setSelectedCircles] = useState([
     'c2',
     'c4',
@@ -45,12 +47,23 @@ const Sector2 = () => {
         <>
           {col.ids[0] === 'dropdown' ? (
             <div id="section4DropdownDiv">
-              <select id="section2Dropdown" className="gridSelectApp">
-                <option>+</option>
-                <option>-</option>
-                <option>*</option>
-                <option>/</option>
-              </select>
+              <FormControl className="selectKit">
+                <Select
+                  labelId="symbol-select-label"
+                  id="kit-select"
+                  value={selectedSymbol}
+                  label="Age"
+                  onChange={(e) => {
+                    setSelectedSymbol(e.target.value);
+                  }}
+                  variant="outlined"
+                >
+                  <MenuItem value="+">+</MenuItem>
+                  <MenuItem value="-">-</MenuItem>
+                  <MenuItem value="*">*</MenuItem>
+                  <MenuItem value="/">/</MenuItem>
+                </Select>
+              </FormControl>
             </div>
           ) : (
             <div key={colIndex} id={`column${colIndex + 1}`} className="sectorColumns">
