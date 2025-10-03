@@ -44,7 +44,7 @@ const Sector2 = () => {
   return (
     <div id="sector2">
       {columns.map((col, colIndex) => (
-        <>
+        <React.Fragment key={colIndex}>
           {col.ids[0] === 'dropdown' ? (
             <div id="section4DropdownDiv">
               <FormControl className="selectKit">
@@ -91,7 +91,7 @@ const Sector2 = () => {
                 })}
             </div>
           )}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

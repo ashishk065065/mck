@@ -9,8 +9,8 @@ export default function QuizApp() {
   const [questions, setQuestions] = React.useState([]);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [userAnswer, setUserAnswer] = React.useState('');
-  const [feedback, setFeedback] = React.useState('');
   const [completed, setCompleted] = React.useState(false);
+  const [shake, setShake] = React.useState(false);
 
   useEffect(() => {
     if (selectedTopic) {
@@ -32,7 +32,6 @@ export default function QuizApp() {
       setQuestions(sampleQuestions);
       setCurrentIndex(0);
       setUserAnswer('');
-      setFeedback('');
       setCompleted(false);
     }
   }, [selectedTopic]);
@@ -45,12 +44,15 @@ export default function QuizApp() {
       if (currentIndex + 1 < questions.length) {
         setCurrentIndex(currentIndex + 1);
         setUserAnswer('');
-        setFeedback('');
+        setShake(false);
       } else {
         setCompleted(true);
+        setShake(false);
       }
     } else {
-      setFeedback('Incorrect, try again.');
+      setUserAnswer('');
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
     }
   };
 
@@ -86,7 +88,6 @@ export default function QuizApp() {
                 setCurrentIndex(0);
                 setSelectedTopic(null);
                 setUserAnswer('');
-                setFeedback('');
                 setCompleted(false);
                 setQuestions([]);
               }}
@@ -117,7 +118,6 @@ export default function QuizApp() {
                   style={{
                     marginBottom: '5px',
                     fontSize: 'large',
-                    color: `${feedback.length > 0 ? 'red' : 'white'}`,
                   }}
                 >
                   {questions[currentIndex]?.question}
@@ -128,8 +128,13 @@ export default function QuizApp() {
                   variant="outlined"
                   value={userAnswer}
                   onChange={(e) => setUserAnswer(e.target.value)}
+                  className={shake ? 'shake' : ''}
                 />
-                <button type="submit" className="quiz-button" style={{ marginLeft: '10px' }}>
+                <button
+                  type="submit"
+                  className="quiz-button"
+                  style={{ marginLeft: '10px', paddingLeft: '5px', paddingRight: '5px' }}
+                >
                   <CheckTwoToneIcon />
                 </button>
               </div>
