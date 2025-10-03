@@ -111,22 +111,27 @@ export default function WhiteBoard() {
         </div>
         <div style={{ display: 'flex' }}>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <button
-              style={{ background: color.includes('#fff') ? '#1e3a8a' : color, padding: '0 3px' }}
-              title="Color"
-              className="borderButton"
-              onClick={() => colorInputRef.current && colorInputRef.current.click()}
-            >
-              <BrushTwoToneIcon />
-            </button>
+            <label htmlFor="color-picker">
+              <button
+                style={{
+                  background: color.includes('#fff') ? '#1e3a8a' : color,
+                  padding: '0 3px',
+                  marginRight: '10px',
+                }}
+                title="Color"
+                className="borderButton"
+              >
+                <BrushTwoToneIcon />
+              </button>
+            </label>
+
             <input
+              id="color-picker"
               ref={colorInputRef}
-              className="color-picker"
               type="color"
               value={color}
               onChange={(e) => setColor(e.target.value)}
-              title="Brush Color"
-              style={{ display: 'block', height: 0, width: 0, marginRight: '10px' }}
+              style={{ position: 'absolute', opacity: 0 }}
             />
             {showSlider && (
               <Box sx={{ width: 100, height: 30, marginRight: '10px' }}>
