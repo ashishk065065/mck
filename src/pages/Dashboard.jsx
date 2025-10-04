@@ -7,6 +7,10 @@ import SideBar from './SideBar';
 import Home from './Home';
 import ConceptKit from './ConceptKitComponents/ConceptKit.jsx';
 import Score from './Score';
+import { Modal } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Calculator from './Calculator.jsx';
 
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
@@ -14,6 +18,7 @@ export default function Dashboard() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState('home');
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -64,7 +69,15 @@ export default function Dashboard() {
             sidebarOpen={sidebarOpen}
             handleSignOut={handleSignOut}
             setSelectedMenuItem={setSelectedMenuItem}
+            isCalculatorOpen={isCalculatorOpen}
+            setIsCalculatorOpen={setIsCalculatorOpen}
           />
+          {isCalculatorOpen && (
+            <Calculator
+              isCalculatorOpen={isCalculatorOpen}
+              setIsCalculatorOpen={setIsCalculatorOpen}
+            />
+          )}
           <div className={`dashboard-content ${sidebarOpen ? 'sidebar-open-content' : ''}`}>
             {selectedMenuItem === 'home' ? (
               <Home selectedMenuItem={selectedMenuItem} setSelectedMenuItem={setSelectedMenuItem} />

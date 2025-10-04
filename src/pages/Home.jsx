@@ -24,7 +24,7 @@ export default function Home({ selectedMenuItem, setSelectedMenuItem }) {
     if (dragging.current && containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       let percent = ((e.clientX - rect.left) / rect.width) * 100;
-      percent = Math.max(35, Math.min(percent, 100 - 35));
+      percent = Math.max(35, Math.min(percent, 65));
       setQuizWidthPercent(percent);
     }
   };
@@ -39,7 +39,7 @@ export default function Home({ selectedMenuItem, setSelectedMenuItem }) {
       const rect = containerRef.current.getBoundingClientRect();
       const touch = e.touches[0];
       let percent = ((touch.clientX - rect.left) / rect.width) * 100;
-      percent = Math.max(35, Math.min(percent, 100 - 35));
+      percent = Math.max(35, Math.min(percent, 65));
       setQuizWidthPercent(percent);
     }
   };
@@ -64,7 +64,7 @@ export default function Home({ selectedMenuItem, setSelectedMenuItem }) {
       const quizDiv = containerRef.current.querySelector('.home-quiz');
       const rect = quizDiv.getBoundingClientRect();
       let percent = ((e.clientY - rect.top) / rect.height) * 100;
-      percent = Math.max(20, Math.min(percent, 80));
+      percent = Math.max(35, Math.min(percent, 65));
       setVerticalPercent(percent);
     }
   };
@@ -75,7 +75,7 @@ export default function Home({ selectedMenuItem, setSelectedMenuItem }) {
       const rect = quizDiv.getBoundingClientRect();
       const touch = e.touches[0];
       let percent = ((touch.clientY - rect.top) / rect.height) * 100;
-      percent = Math.max(20, Math.min(percent, 80));
+      percent = Math.max(20, Math.min(percent, 65));
       setVerticalPercent(percent);
     }
   };

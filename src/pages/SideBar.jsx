@@ -6,6 +6,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import LogoutIcon from '@mui/icons-material/Logout';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
+import CalculateIcon from '@mui/icons-material/Calculate';
 import './Dashboard.css';
 
 export default function SideBar({
@@ -14,6 +15,8 @@ export default function SideBar({
   sidebarOpen,
   handleSignOut,
   setSelectedMenuItem,
+  isCalculatorOpen,
+  setIsCalculatorOpen,
 }) {
   return (
     <>
@@ -28,6 +31,13 @@ export default function SideBar({
             </IconButton>
             <IconButton onClick={() => setSelectedMenuItem('kit')}>
               <FullscreenIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                setIsCalculatorOpen(!isCalculatorOpen);
+              }}
+            >
+              <CalculateIcon />
             </IconButton>
           </div>
           <div className="bottom-icons">
@@ -62,6 +72,16 @@ export default function SideBar({
                 <FullscreenIcon />
               </IconButton>
               <span className="icon-label">Concept Kit</span>
+            </div>
+            <div>
+              <IconButton
+                onClick={() => {
+                  setIsCalculatorOpen(!isCaculatorOpen);
+                }}
+              >
+                <CalculateIcon />
+              </IconButton>
+              <span className="icon-label">Calculator</span>
             </div>
           </div>
           <div className="bottom-icons">

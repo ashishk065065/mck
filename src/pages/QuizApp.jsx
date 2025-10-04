@@ -1,10 +1,11 @@
 import { Autocomplete, TextField } from '@mui/material';
-import { constants, topicSymbols } from '../assets/constants.js';
+import { constants, difficulty, topicSymbols } from '../assets/constants.js';
 import React, { useEffect } from 'react';
 import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
 
 export default function QuizApp() {
   const [selectedTopic, setSelectedTopic] = React.useState(null);
+  const [selectedDifficulty, setSelectedDifficulty] = React.useState(null);
   const [quizStarted, setQuizStarted] = React.useState(false);
   const [questions, setQuestions] = React.useState([]);
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -16,8 +17,22 @@ export default function QuizApp() {
     if (selectedTopic) {
       const operator = topicSymbols[selectedTopic];
       const sampleQuestions = Array.from({ length: 5 }, () => {
-        const number1 = Math.floor(Math.random() * 10000) + 1;
-        const number2 = Math.floor(Math.random() * 10000) + 1;
+        let difficultyMultiplier;
+        switch (selectedDifficulty) {
+          case 'Easy':
+            difficultyMultiplier = 10;
+            break;
+          case 'Medium':
+            difficultyMultiplier = 100;
+            break;
+          case 'Hard':
+            difficultyMultiplier = Math.floor(Math.random() * (100000 - 1000 + 1)) + 1000;
+            break;
+          default:
+            difficultyMultiplier = 10;
+        }
+        const number1 = Math.floor(Math.random() * difficultyMultiplier) + 1;
+        const number2 = Math.floor(Math.random() * difficultyMultiplier) + 1;
         let answer;
         if (operator === '/' && number2 === 0) {
           answer = 'undefined';
@@ -34,7 +49,7 @@ export default function QuizApp() {
       setUserAnswer('');
       setCompleted(false);
     }
-  }, [selectedTopic]);
+  }, [selectedDifficulty, selectedTopic]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,10 +80,15 @@ export default function QuizApp() {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            gap: '10px',
-            justifyContent: 'space-between',
+            gap: '15px',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
+          className={`${quizStarted === false ? 'quiz-selection' : ''}`}
         >
+          {quizStarted === false && (
+            <span style={{ fontSize: '18px' }}>Let&#39;s begin with choosing topic and level</span>
+          )}
           <Autocomplete
             disablePortal
             options={constants}
@@ -90,20 +110,35 @@ export default function QuizApp() {
                 setUserAnswer('');
                 setCompleted(false);
                 setQuestions([]);
+                setSelectedDifficulty(null);
               }}
             >
               End
             </button>
           ) : (
-            <button
-              className="quiz-button"
-              onClick={() => {
-                setQuizStarted(true);
-              }}
-              disabled={selectedTopic === null}
-            >
-              Start Quiz
-            </button>
+            <>
+              <Autocomplete
+                disablePortal
+                options={difficulty}
+                sx={{ width: 250 }}
+                renderInput={(params) => <TextField {...params} label="Level" />}
+                value={selectedDifficulty}
+                onChange={(event, newValue) => {
+                  setSelectedDifficulty(newValue?.label || null);
+                }}
+                disabled={selectedTopic !== null && quizStarted === true}
+              />
+              <button
+                style={{ width: '50%' }}
+                className="quiz-button"
+                onClick={() => {
+                  setQuizStarted(true);
+                }}
+                disabled={selectedTopic === null || selectedDifficulty === null}
+              >
+                Start Quiz
+              </button>
+            </>
           )}
         </div>
       </div>

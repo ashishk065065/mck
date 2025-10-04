@@ -149,7 +149,8 @@
     }
     textarea::placeholder {
         text-align: center;
-        color: #fff;
+        color: #9a9a9a;
+        padding-top: 30%;
     }
     textarea:focus-visible {
         outline: none;
@@ -160,6 +161,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    .quiz-selection {
+        display: flex;
+        flex-direction: column !important;
+    }
     .quizApp-header{
         margin-top: 20px;
         align-items: center;
@@ -250,4 +255,34 @@
 
 .shake {
   animation: shake 0.5s;
+}
+
+#calculator {
+    .calculator-row {
+        width: 100%;
+        height: 20%;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        flex-direction: row;
+    }
+    .lr {
+        border: none !important;
+    }
+    .calculator-cell {
+        width: 25%;
+        border-right: 1px solid #ccc;
+    }
+    .rb{
+        border-right: none !important;
+    }
+    button {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+    }
 }
