@@ -11,6 +11,8 @@ export const difficulty = [
   { label: 'Hard', value: 'hard' },
 ];
 
+export const correctWords = ['Great job!', 'Awesome!', 'Fantastic!', 'Bravo!'];
+
 export const topicSymbols = {
   Addition: '+',
   Subtraction: '-',

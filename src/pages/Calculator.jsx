@@ -1,6 +1,6 @@
 import { Modal } from '@mui/material';
 import Box from '@mui/material/Box';
-import React from 'react';
+import React, { useCallback } from 'react';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 
 export default function Calculator({ isCalculatorOpen, setIsCalculatorOpen }) {
@@ -31,7 +31,7 @@ export default function Calculator({ isCalculatorOpen, setIsCalculatorOpen }) {
     }
   }, [inputValue, waitingForSecondValue, operator, firstValue]);
 
-  const compute = () => {
+  const compute = useCallback(() => {
     if (firstValue !== null && operator && secondValue !== null) {
       let result;
       switch (operator) {
@@ -56,20 +56,68 @@ export default function Calculator({ isCalculatorOpen, setIsCalculatorOpen }) {
       setOperator(null);
       setWaitingForSecondValue(false);
     }
-  };
+  }, [firstValue, operator, secondValue]);
 
-  const sanitizeInputValue = (value) => {
+  const sanitizeInputValue = useCallback((value) => {
     if (value.length > 1 && value[0] === '0' && value[1] !== '.') {
       return value.replace(/^0+/, '');
     }
     return value;
-  };
+  }, []);
 
-  const handleInput = (val) => {
-    setInputValue((prev) =>
-      sanitizeInputValue(prev === '0' ? val : sanitizeInputValue(prev + val))
-    );
-  };
+  const handleInput = React.useCallback(
+    (val) => {
+      setInputValue((prev) =>
+        sanitizeInputValue(prev === '0' ? val : sanitizeInputValue(prev + val))
+      );
+    },
+    [sanitizeInputValue]
+  );
+
+  React.useEffect(() => {
+    if (!isCalculatorOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.repeat) return;
+      const key = e.key;
+      if (key >= '0' && key <= '9') {
+        handleInput(key);
+      } else if (key === '.') {
+        if (!inputValue.includes('.')) handleInput('.');
+      } else if (key === '+') {
+        setFirstValue(parseFloat(inputValue));
+        setOperator('+');
+        setWaitingForSecondValue(true);
+        setInputValue('0');
+      } else if (key === '-') {
+        setFirstValue(parseFloat(inputValue));
+        setOperator('-');
+        setWaitingForSecondValue(true);
+        setInputValue('0');
+      } else if (key === '*') {
+        setFirstValue(parseFloat(inputValue));
+        setOperator('*');
+        setWaitingForSecondValue(true);
+        setInputValue('0');
+      } else if (key === '/') {
+        setFirstValue(parseFloat(inputValue));
+        setOperator('/');
+        setWaitingForSecondValue(true);
+        setInputValue('0');
+      } else if (key === 'Enter' || key === '=') {
+        compute();
+      } else if (key === 'Backspace') {
+        let newValue = inputValue.slice(0, -1);
+        if (newValue === '' || newValue === '-') {
+          newValue = '0';
+        }
+        setInputValue(sanitizeInputValue(newValue));
+      } else if (key === 'Escape') {
+        setIsCalculatorOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isCalculatorOpen, inputValue, handleInput, compute, setIsCalculatorOpen, sanitizeInputValue]);
 
   return (
     <>
@@ -135,9 +183,23 @@ export default function Calculator({ isCalculatorOpen, setIsCalculatorOpen }) {
                   >
                     <BackspaceIcon />
                   </button>
-                  <button className="calculator-cell">%</button>
+                  <button
+                    className="calculator-cell"
+                    onClick={() => {
+                      if (inputValue !== '0') {
+                        const percentValue = String(parseFloat(inputValue) / 100);
+                        setInputValue(percentValue);
+                        if (waitingForSecondValue) {
+                          setSecondValue(parseFloat(percentValue));
+                        }
+                      }
+                    }}
+                  >
+                    %
+                  </button>
                   <button
                     className="calculator-cell rb"
+                    style={{ fontSize: '25px' }}
                     onClick={() => {
                       setFirstValue(parseFloat(inputValue));
                       setOperator('/');
@@ -145,7 +207,7 @@ export default function Calculator({ isCalculatorOpen, setIsCalculatorOpen }) {
                       setInputValue('0');
                     }}
                   >
-                    /
+                    ÷
                   </button>
                 </div>
                 <div className="calculator-row">
@@ -160,6 +222,7 @@ export default function Calculator({ isCalculatorOpen, setIsCalculatorOpen }) {
                   </button>
                   <button
                     className="calculator-cell rb"
+                    style={{ fontSize: '20px' }}
                     onClick={() => {
                       setFirstValue(parseFloat(inputValue));
                       setOperator('*');
@@ -167,7 +230,7 @@ export default function Calculator({ isCalculatorOpen, setIsCalculatorOpen }) {
                       setInputValue('0');
                     }}
                   >
-                    *
+                    ×
                   </button>
                 </div>
                 <div className="calculator-row">

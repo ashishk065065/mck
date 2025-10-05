@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from '@mui/material';
-import { constants, difficulty, topicSymbols } from '../assets/constants.js';
+import { constants, correctWords, difficulty, topicSymbols } from '../assets/constants.js';
 import React, { useEffect } from 'react';
 import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
 
@@ -12,6 +12,7 @@ export default function QuizApp() {
   const [userAnswer, setUserAnswer] = React.useState('');
   const [completed, setCompleted] = React.useState(false);
   const [shake, setShake] = React.useState(false);
+  const [currentAnswerCorrect, setCurrentAnswerCorrect] = React.useState(false);
 
   useEffect(() => {
     if (selectedTopic) {
@@ -56,9 +57,8 @@ export default function QuizApp() {
     if (!questions.length) return;
     const correctAnswer = String(questions[currentIndex].answer);
     if (userAnswer.trim() === correctAnswer) {
+      setCurrentAnswerCorrect(true);
       if (currentIndex + 1 < questions.length) {
-        setCurrentIndex(currentIndex + 1);
-        setUserAnswer('');
         setShake(false);
       } else {
         setCompleted(true);
@@ -111,6 +111,7 @@ export default function QuizApp() {
                 setCompleted(false);
                 setQuestions([]);
                 setSelectedDifficulty(null);
+                setCurrentAnswerCorrect(false);
               }}
             >
               End
@@ -145,35 +146,67 @@ export default function QuizApp() {
       {selectedTopic && quizStarted && (
         <div className="quizApp-body">
           {completed ? (
-            <div className="quizApp-complete">Quiz complete! Well done.</div>
+            <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+              <span>Excellent!</span>
+              <span>You completed the quiz.</span>
+            </div>
           ) : (
-            <form onSubmit={handleSubmit}>
-              <div className="quizApp-question">
-                <p
-                  style={{
-                    marginBottom: '5px',
-                    fontSize: 'large',
-                  }}
-                >
-                  {questions[currentIndex]?.question}
-                </p>
-                <TextField
-                  id="outlined-basic"
-                  label="Answer"
-                  variant="outlined"
-                  value={userAnswer}
-                  onChange={(e) => setUserAnswer(e.target.value)}
-                  className={shake ? 'shake' : ''}
-                />
-                <button
-                  type="submit"
-                  className="quiz-button"
-                  style={{ marginLeft: '10px', paddingLeft: '5px', paddingRight: '5px' }}
-                >
-                  <CheckTwoToneIcon />
-                </button>
-              </div>
-            </form>
+            <div className="quizApp-question">
+              {currentAnswerCorrect ? (
+                <div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      textAlign: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <span>{correctWords[currentIndex]}</span>
+                    <span>Proceed to next question </span>
+                    <button
+                      className="quiz-button"
+                      style={{
+                        marginTop: '20px',
+                      }}
+                      onClick={() => {
+                        setCurrentIndex(currentIndex + 1);
+                        setUserAnswer('');
+                        setCurrentAnswerCorrect(false);
+                      }}
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p
+                    style={{
+                      marginBottom: '5px',
+                      fontSize: 'large',
+                    }}
+                  >
+                    {questions[currentIndex]?.question}
+                  </p>
+                  <TextField
+                    id="outlined-basic"
+                    label="Answer"
+                    variant="outlined"
+                    value={userAnswer}
+                    onChange={(e) => setUserAnswer(e.target.value)}
+                    className={shake ? 'shake' : ''}
+                  />
+                  <button
+                    className="quiz-button"
+                    style={{ marginLeft: '10px', paddingLeft: '5px', paddingRight: '5px' }}
+                    onClick={handleSubmit}
+                  >
+                    <CheckTwoToneIcon />
+                  </button>
+                </div>
+              )}
+            </div>
           )}
         </div>
       )}

@@ -1,9 +1,9 @@
-import { Slider, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import React from 'react';
 import BrushTwoToneIcon from '@mui/icons-material/BrushTwoTone';
-import FormatSizeTwoToneIcon from '@mui/icons-material/FormatSizeTwoTone';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
-import Box from '@mui/material/Box';
+import TextDecreaseTwoToneIcon from '@mui/icons-material/TextDecreaseTwoTone';
+import TextIncreaseTwoToneIcon from '@mui/icons-material/TextIncreaseTwoTone';
 
 export default function WhiteBoard() {
   const [alignment, setAlignment] = React.useState('type');
@@ -14,7 +14,6 @@ export default function WhiteBoard() {
   const [color, setColor] = React.useState('#fff');
   const [lineWidth, setLineWidth] = React.useState(2);
   const [fontSize, setFontSize] = React.useState(18);
-  const [showSlider, setShowSlider] = React.useState(false);
 
   const handleChange = (event, newAlignment) => {
     newAlignment !== null && setAlignment(newAlignment);
@@ -75,18 +74,17 @@ export default function WhiteBoard() {
     }
   };
 
-  const handleSliderChange = (e) => {
+  const handleSizeIncrease = () => {
     alignment === 'draw'
-      ? setLineWidth(parseInt(e.target.value) * 2)
-      : setFontSize(parseInt(e.target.value) * 2 + 14);
+      ? lineWidth < 10 && setLineWidth(lineWidth + 2)
+      : fontSize < 26 && setFontSize(fontSize + 2);
   };
 
-  React.useEffect(() => {
-    if (showSlider) {
-      const timer = setTimeout(() => setShowSlider(false), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [showSlider]);
+  const handleSizeDecrease = () => {
+    alignment === 'draw'
+      ? lineWidth > 2 && setLineWidth(lineWidth - 2)
+      : fontSize > 14 && setFontSize(fontSize - 2);
+  };
 
   const resetPath = () => {
     const canvas = canvasRef.current;
@@ -132,28 +130,21 @@ export default function WhiteBoard() {
               onChange={(e) => setColor(e.target.value)}
               style={{ position: 'absolute', opacity: 0 }}
             />
-            {showSlider && (
-              <Box sx={{ width: 100, height: 30, marginRight: '10px' }}>
-                <Slider
-                  aria-label="brushSize"
-                  defaultValue={alignment === 'draw' ? lineWidth / 2 : (fontSize - 14) / 2}
-                  valueLabelDisplay="auto"
-                  shiftStep={1}
-                  step={1}
-                  marks
-                  min={1}
-                  max={5}
-                  onChange={handleSliderChange}
-                />
-              </Box>
-            )}
             <button
               style={{ padding: '0 3px', marginRight: '10px' }}
-              title="Size"
+              title="Decrease Size"
               className="borderButton"
-              onClick={() => setShowSlider((s) => !s)}
+              onClick={handleSizeDecrease}
             >
-              <FormatSizeTwoToneIcon />
+              <TextDecreaseTwoToneIcon />
+            </button>
+            <button
+              style={{ padding: '0 3px', marginRight: '10px' }}
+              title="Increase Size"
+              className="borderButton"
+              onClick={handleSizeIncrease}
+            >
+              <TextIncreaseTwoToneIcon />
             </button>
             <button
               style={{ padding: '0 3px' }}

@@ -7,9 +7,6 @@ import SideBar from './SideBar';
 import Home from './Home';
 import ConceptKit from './ConceptKitComponents/ConceptKit.jsx';
 import Score from './Score';
-import { Modal } from '@mui/material';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Calculator from './Calculator.jsx';
 
 export default function Dashboard() {

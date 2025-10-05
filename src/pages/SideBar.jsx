@@ -5,7 +5,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import SportsScoreIcon from '@mui/icons-material/SportsScore';
+// import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import './Dashboard.css';
 
@@ -26,9 +26,9 @@ export default function SideBar({
             <IconButton onClick={() => setSelectedMenuItem('home')}>
               <HomeIcon />
             </IconButton>
-            <IconButton onClick={() => setSelectedMenuItem('score')}>
-              <SportsScoreIcon />
-            </IconButton>
+            {/*<IconButton onClick={() => setSelectedMenuItem('score')}>*/}
+            {/*  <SportsScoreIcon />*/}
+            {/*</IconButton>*/}
             <IconButton onClick={() => setSelectedMenuItem('kit')}>
               <FullscreenIcon />
             </IconButton>
@@ -61,12 +61,12 @@ export default function SideBar({
               </IconButton>
               <span className="icon-label">Home</span>
             </div>
-            <div>
-              <IconButton onClick={() => setSelectedMenuItem('score')}>
-                <SportsScoreIcon />
-              </IconButton>
-              <span className="icon-label">Scores</span>
-            </div>
+            {/*<div>*/}
+            {/*  <IconButton onClick={() => setSelectedMenuItem('score')}>*/}
+            {/*    <SportsScoreIcon />*/}
+            {/*  </IconButton>*/}
+            {/*  <span className="icon-label">Scores</span>*/}
+            {/*</div>*/}
             <div>
               <IconButton onClick={() => setSelectedMenuItem('kit')}>
                 <FullscreenIcon />
@@ -76,7 +76,7 @@ export default function SideBar({
             <div>
               <IconButton
                 onClick={() => {
-                  setIsCalculatorOpen(!isCaculatorOpen);
+                  setIsCalculatorOpen(!isCalculatorOpen);
                 }}
               >
                 <CalculateIcon />
