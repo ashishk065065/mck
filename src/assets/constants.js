@@ -19,3 +19,12 @@ export const topicSymbols = {
   Multiplication: '*',
   Division: '/',
 };
+
+const mockLogin = {
+  createdAt: '2025-09-28T00:02:04.688Z',
+  level: 1,
+  email: 'ashishk065065@gmail.com',
+  overallScore: 0,
+  name: 'Ashish Kongati',
+};
+export default mockLogin

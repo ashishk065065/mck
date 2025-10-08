@@ -8,9 +8,10 @@ import Home from './Home';
 import ConceptKit from './ConceptKitComponents/ConceptKit.jsx';
 import Score from './Score';
 import Calculator from './Calculator.jsx';
+import mockLogin from '../assets/constants.js';
 
 export default function Dashboard() {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(mockLogin);
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
